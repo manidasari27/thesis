@@ -25,9 +25,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.ECR_REPO }} .
-          docker tag ${{ secrets.ECR_REPO }}:latest ${{ secrets.ECR_URI }}:latest
+          docker build -t 016278727232.dkr.ecr.us-east-1.amazonaws.com/x23301295-url-phishing:latest .
 
       - name: Push Docker image to ECR
         run: |
-          docker push ${{ secrets.ECR_URI }}:latest
+          docker push 016278727232.dkr.ecr.us-east-1.amazonaws.com/x23301295-url-phishing:latest
+
+      - name: Done
+        run: echo "Pushed to ECR successfully."
