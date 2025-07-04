@@ -42,9 +42,10 @@ def urldetectorsys():
   if y_pred == 1:
     outputres = "ALERT URL DETECTED AS PHISHING !"
     return render_template('detection.html', output = outputres, inpurl = url)
+    
 
   else:
-    outputres = "URL DETECTED AS SAFE !"
+    outputres = "URL DETECTED AS SAFE !!!"
     return render_template('detection.html', output = outputres, inpurl = url)
 
 
