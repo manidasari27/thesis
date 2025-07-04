@@ -5,8 +5,10 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-push:
+  setup:
     runs-on: ubuntu-latest
+    outputs:
+      image-uri: ${{ steps.define-image.outputs.image-uri }}
 
     steps:
       - name: Checkout code
@@ -23,9 +25,30 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Define Image URI
+        id: define-image
+        run: |
+          echo "image-uri=016278727232.dkr.ecr.us-east-1.amazonaws.com/x23301295-url-phishing:latest" >> $GITHUB_OUTPUT
+
+  build-image:
+    runs-on: ubuntu-latest
+    needs: setup
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Build Docker image
         run: |
-          docker build -t 016278727232.dkr.ecr.us-east-1.amazonaws.com/x23301295-url-phishing:latest ./flaskwebapp
+          docker build -t ${{ needs.setup.outputs.image-uri }} ./flaskwebapp
+
+  push-image:
+    runs-on: ubuntu-latest
+    needs: [setup, build-image]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Push Docker image to ECR
         run: |
