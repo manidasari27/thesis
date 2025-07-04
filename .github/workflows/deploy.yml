@@ -25,7 +25,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t 016278727232.dkr.ecr.us-east-1.amazonaws.com/x23301295-url-phishing:latest .
+          docker build -t 016278727232.dkr.ecr.us-east-1.amazonaws.com/x23301295-url-phishing:latest ./flaskwebapp
 
       - name: Push Docker image to ECR
         run: |
